@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employeemanager.entity.Employee;
+import com.employeemanager.exception.UserNotFoundException;
 import com.employeemanager.service.EmployeeService;
 
 @CrossOrigin("http://localhost:4200")
@@ -36,7 +37,7 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/find/{id}")
-	public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") Long id ) {
+	public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") Long id ) throws UserNotFoundException {
 		Employee employee = employeeService.findEmployeeById(id);
 		return new ResponseEntity<>(employee,HttpStatus.OK);
 	}
@@ -54,9 +55,10 @@ public class EmployeeController {
 	}
 	
 	@DeleteMapping("/delete/{id}")
- ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id) {
+	ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id) {
 		employeeService.deleteEmployee(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
 }
 	

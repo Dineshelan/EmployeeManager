@@ -1,7 +1,6 @@
 package com.employeemanager.service;
 
 import java.util.List;
-
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.employeemanager.entity.Employee;
 import com.employeemanager.exception.UserNotFoundException;
 import com.employeemanager.repository.EmployeeRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class EmployeeService {
@@ -33,7 +34,7 @@ public class EmployeeService {
 		return employeeRepo.save(employee);
 	}
 
-	public Employee findEmployeeById(Long id) {
+	public Employee findEmployeeById(Long id) throws UserNotFoundException{
 		try {
 			if (id == null) {
 				throw new UserNotFoundException("User by id " + id + " was not found");
@@ -46,7 +47,7 @@ public class EmployeeService {
 		return null;
 
 	}
-
+	@Transactional
 	public void deleteEmployee(Long id) {
 		employeeRepo.deleteEmployeeById(id);
 	}
