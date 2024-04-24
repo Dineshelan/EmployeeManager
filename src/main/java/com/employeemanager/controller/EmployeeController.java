@@ -24,11 +24,7 @@ import com.employeemanager.service.EmployeeService;
 @RequestMapping("/employee")
 public class EmployeeController {
 	@Autowired
-	private final EmployeeService employeeService;
-	
-	public EmployeeController(EmployeeService employeeService) {
-		this.employeeService = employeeService;
-	}
+	public EmployeeService employeeService;
 	
 	@GetMapping("/all")
 	public ResponseEntity<List<Employee>> getAllEmployee() {
@@ -55,7 +51,7 @@ public class EmployeeController {
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id) {
+	ResponseEntity<Void> deleteEmployee(@PathVariable("id") Long id) {
 		employeeService.deleteEmployee(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
